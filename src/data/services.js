@@ -1,0 +1,58 @@
+export const services = [
+  {
+    title: 'SEO & Technical SEO',
+    description: 'Rank higher in Google Australia with technical SEO, content strategy and local search optimisation.',
+    slug: 'seo-and-technical-seo',
+    icon: 'Search',
+    image: '/images/services/TechnicalSEOOrganicGrowth.webp',
+  },
+  {
+    title: 'Google Ads & PPC',
+    description: 'ROAS-driven Google Ads campaigns engineered for Australian search intent and CPCs.',
+    slug: 'google-ads-and-ppc',
+    icon: 'Target',
+    image: '/images/services/PerformanceMarketing.webp',
+  },
+  {
+    title: 'Social Media Marketing',
+    description: 'Meta and TikTok campaigns that build audiences and drive measurable conversions.',
+    slug: 'social-media-marketing',
+    icon: 'Megaphone',
+    image: '/images/services/E-CommerceDevelopment.webp',
+  },
+  {
+    title: 'Web Development',
+    description: 'Custom, fast, SEO-ready websites built without templates or unnecessary bloat.',
+    slug: 'web-development',
+    icon: 'MonitorSmartphone',
+    image: '/images/services/WebsiteDevelopment.webp',
+  },
+  {
+    title: 'E-Commerce Development',
+    description: 'Shopify and WooCommerce builds engineered for conversion, scale and long-term growth.',
+    slug: 'e-commerce-development',
+    icon: 'ShoppingCart',
+    image: '/images/services/E-CommerceDevelopment.webp',
+  },
+  {
+    title: 'Branding & Creative',
+    description: 'Logo systems and brand identity that build instant trust across every touchpoint.',
+    slug: 'branding-and-creative',
+    icon: 'BrushCleaning',
+    image: '/images/services/BrandCreativeStudio.webp',
+  },
+  {
+    title: 'Content Marketing',
+    description: 'SEO content and copy that ranks and reads like it was written by a human, because it was.',
+    slug: 'content-marketing',
+    icon: 'PenTool',
+    image: '/images/services/contentMarketing.webp',
+  },
+  {
+    title: 'Conversion Rate Optimisation',
+    description: 'Turn existing traffic into more leads and sales without increasing ad spend.',
+    slug: 'conversion-rate-optimisation',
+    icon: 'TrendingUp',
+    image: '/images/services/CRO.webp',
+  },
+]

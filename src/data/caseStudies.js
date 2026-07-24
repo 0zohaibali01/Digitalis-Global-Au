@@ -1,0 +1,43 @@
+export const caseStudies = [
+  {
+    client: 'Puzzle Art Australia',
+    industry: 'E-commerce',
+    metric: '7x+ ROAS',
+    roi: '185%',
+    slug: 'puzzle-art-australia',
+    summary: 'A sharper Shopify and paid-media programme that turned product interest into stronger traffic and order growth.',
+    headline: 'Making a distinctive product easier to discover, trust and buy.',
+    challenge: 'Puzzle Art Australia needed a digital experience and acquisition programme that could translate a visually distinctive product into consistent online demand.',
+    approach: ['Refined the Shopify buying journey around product discovery and confidence', 'Connected paid media to high-intent landing experiences', 'Used performance data to keep creative, audiences and spend focused'],
+    results: [['7x+', 'ROAS on paid media'], ['37%', 'Order growth in one month'], ['31%', 'Traffic growth in one month']],
+    services: ['Shopify development', 'Digital marketing', 'Conversion optimisation'],
+  },
+  {
+    client: 'Supacore',
+    industry: 'Health & wellness',
+    metric: '245% ROI',
+    roi: '245%',
+    slug: 'supacore',
+    summary: 'A Shopify foundation built to support a growing health and wellness brand with a more confident path to purchase.',
+    headline: 'Building an e-commerce foundation for a brand ready to scale.',
+    challenge: 'As Supacore moved from early-stage momentum towards a larger e-commerce operation, the online store needed to make buying simple while supporting the brand’s next phase of growth.',
+    approach: ['Created a conversion-conscious Shopify experience', 'Focused the storefront around clearer product and checkout journeys', 'Established a scalable platform for future merchandising and marketing activity'],
+    results: [['245%', 'Return on investment'], ['Shopify', 'E-commerce platform'], ['Growth-ready', 'Checkout and conversion focus']],
+    services: ['Shopify development', 'UX and conversion strategy', 'E-commerce optimisation'],
+  },
+  {
+    client: 'Lux And Co Australia',
+    industry: 'E-commerce · Wedding platform',
+    metric: '240% ROI',
+    roi: '240%',
+    slug: 'lux-and-co-australia',
+    summary: 'A connected platform for bookings, e-commerce and certificate generation—designed around a more seamless customer journey.',
+    headline: 'Bringing several customer journeys into one polished platform.',
+    challenge: 'Lux And Co Australia needed to make several important customer actions feel like one connected experience, from booking through to e-commerce and certificate generation.',
+    approach: ['Mapped the end-to-end customer journey across the platform', 'Brought bookings, commerce and certificate functionality into one experience', 'Designed for a clear, low-friction journey across devices'],
+    results: [['240%', 'Return on investment'], ['3-in-1', 'Booking, e-commerce and certificates'], ['One platform', 'Connected customer experience']],
+    services: ['Custom web development', 'E-commerce development', 'UX design'],
+  },
+]
+
+export const getCaseStudy = (slug) => caseStudies.find((study) => study.slug === slug)

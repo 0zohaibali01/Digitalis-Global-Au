@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.digitalisglobal.com/au</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.digitalisglobal.com/au/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url><loc>https://www.digitalisglobal.com/au/case-studies</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.digitalisglobal.com/au/case-studies/puzzle-art-australia</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.digitalisglobal.com/au/case-studies/supacore</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.digitalisglobal.com/au/case-studies/lux-and-co-australia</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url>
+    <loc>https://www.digitalisglobal.com/au/services/seo-and-technical-seo</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url><loc>https://www.digitalisglobal.com/au/services</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.digitalisglobal.com/au/services/social-media-marketing</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.digitalisglobal.com/au/services/web-development</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.digitalisglobal.com/au/services/e-commerce-development</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.digitalisglobal.com/au/services/branding-and-creative</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.digitalisglobal.com/au/services/content-marketing</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.digitalisglobal.com/au/services/conversion-rate-optimisation</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url>
+    <loc>https://www.digitalisglobal.com/au/services/google-ads-and-ppc</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
