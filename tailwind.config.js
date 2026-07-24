@@ -28,8 +28,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Manrope', 'ui-sans-serif', 'system-ui'],
-        body: ['Inter', 'ui-sans-serif', 'system-ui'],
+        display: ['Inter Variable', 'ui-sans-serif', 'system-ui'],
+        body: ['Inter Variable', 'ui-sans-serif', 'system-ui'],
       },
     },
   },

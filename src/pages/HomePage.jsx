@@ -1,17 +1,20 @@
+import { lazy } from 'react'
 import { Helmet } from 'react-helmet-async'
 import Hero from '../components/sections/Hero'
 import TrustBar from '../components/sections/TrustBar'
-import ValueProps from '../components/sections/ValueProps'
-import ServicesGrid from '../components/sections/ServicesGrid'
-import AustraliaMap from '../components/sections/AustraliaMap' // Replaces LocalProof
-import CaseStudies from '../components/sections/CaseStudies'
-import Process from '../components/sections/Process'
-import Testimonials from '../components/sections/Testimonials'
-import StatsBand from '../components/sections/StatsBand'
-import FAQ from '../components/sections/FAQ'
-import CTABand from '../components/sections/CTABand'
+import DeferredSection from '../components/DeferredSection'
 import { homepageMeta } from '../seo/meta'
 import { buildFaqSchema, buildOrganizationSchema, buildProfessionalServiceSchema } from '../seo/schema'
+
+const ValueProps = lazy(() => import('../components/sections/ValueProps'))
+const ServicesGrid = lazy(() => import('../components/sections/ServicesGrid'))
+const AustraliaMap = lazy(() => import('../components/sections/AustraliaMap'))
+const CaseStudies = lazy(() => import('../components/sections/CaseStudies'))
+const Process = lazy(() => import('../components/sections/Process'))
+const Testimonials = lazy(() => import('../components/sections/Testimonials'))
+const StatsBand = lazy(() => import('../components/sections/StatsBand'))
+const FAQ = lazy(() => import('../components/sections/FAQ'))
+const CTABand = lazy(() => import('../components/sections/CTABand'))
 
 export default function HomePage() {
   return (
@@ -36,18 +39,15 @@ export default function HomePage() {
       
       <Hero />
       <TrustBar />
-      <ValueProps />
-      <ServicesGrid />
-      
-      {/* Replaced LocalProof with AustraliaMap */}
-      <AustraliaMap />
-      
-      <CaseStudies />
-      <Process />
-      <Testimonials />
-      <StatsBand />
-      <FAQ />
-      <CTABand />
+      <DeferredSection minHeight={680}><ValueProps /></DeferredSection>
+      <DeferredSection minHeight={780}><ServicesGrid /></DeferredSection>
+      <DeferredSection minHeight={560}><AustraliaMap /></DeferredSection>
+      <DeferredSection minHeight={620}><CaseStudies /></DeferredSection>
+      <DeferredSection minHeight={760}><Process /></DeferredSection>
+      <DeferredSection minHeight={580}><Testimonials /></DeferredSection>
+      <DeferredSection minHeight={500}><StatsBand /></DeferredSection>
+      <DeferredSection minHeight={600}><FAQ /></DeferredSection>
+      <DeferredSection minHeight={460}><CTABand /></DeferredSection>
     </>
   )
 }
