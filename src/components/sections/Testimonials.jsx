@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
-import { Star, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
+import { Star, ArrowLeft, ArrowRight } from 'lucide-react'
 import { testimonials } from '../../data/testimonials'
-import Preheading from '../ui/Preheading' // Adjust the relative path to match your folder structure
+import Preheading from '../ui/Preheading' 
 
 export default function Testimonials() {
   const containerRef = useRef(null)
@@ -10,7 +10,7 @@ export default function Testimonials() {
   
   const [isHovered, setIsHovered] = useState(false)
   const [isMouseDown, setIsMouseDown] = useState(false)
-  const [direction, setDirection] = useState('none') // 'left' | 'right' | 'none'
+  const [direction, setDirection] = useState('none') 
   
   const startX = useRef(0)
   const scrollLeftPos = useRef(0)
@@ -87,34 +87,45 @@ export default function Testimonials() {
           }}
           className="relative mt-12 cursor-none"
         >
-          {/* Fluid Glass Bubble Cursor */}
+          {/* 3D Glass Bubble Cursor */}
           {isHovered && (
             <motion.div
               style={{
                 x: smoothX,
                 y: smoothY,
               }}
-              initial={{ scale: 0, opacity: 0 }}
+              initial={{ scale: 0, opacity: 0, borderRadius: "50%" }}
               animate={{
                 scale: isMouseDown ? 1.15 : 1,
                 opacity: 1,
+                // Subtle fluid wobble for a water bubble effect
+                borderRadius: [
+                  "50% 50% 50% 50%",
+                  "43% 57% 43% 57% / 53% 45% 55% 47%",
+                  "55% 45% 55% 45% / 47% 55% 45% 53%",
+                  "50% 50% 50% 50%"
+                ],
               }}
               exit={{ scale: 0, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className="pointer-events-none absolute -left-8 -top-8 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-cyan-400/90 text-slate-950 shadow-[0_0_25px_rgba(34,211,238,0.4)] backdrop-blur-md border border-white/50"
+              transition={{ 
+                scale: { type: 'spring', stiffness: 300, damping: 20 },
+                opacity: { duration: 0.2 },
+                borderRadius: { duration: 4, repeat: Infinity, ease: 'easeInOut' }
+              }}
+              // 1:1 aspect ratio (w-20 h-20), inner shadow for 3D volume, high backdrop blur
+              className="pointer-events-none absolute -left-10 -top-10 z-50 flex h-20 w-20 items-center justify-center bg-cyan-300/30 text-slate-950 backdrop-blur-md border border-white/60 shadow-[inset_0_0_20px_rgba(255,255,255,0.7),0_10px_30px_rgba(34,211,238,0.3)]"
             >
               {/* Dynamic Arrow States */}
               {direction === 'left' && (
-                <ArrowLeft className="h-6 w-6 stroke-[2.5] text-slate-950" />
+                <ArrowLeft className="h-7 w-7 stroke-[2.5] text-slate-900 drop-shadow-md" />
               )}
               {direction === 'right' && (
-                <ArrowRight className="h-6 w-6 stroke-[2.5] text-slate-950" />
+                <ArrowRight className="h-7 w-7 stroke-[2.5] text-slate-900 drop-shadow-md" />
               )}
               {direction === 'none' && (
-                <div className="flex items-center gap-1">
-                  <ArrowLeft className="h-3.5 w-3.5 stroke-[2.5]" />
-                  <Sparkles className="h-3 w-3 fill-slate-950" />
-                  <ArrowRight className="h-3.5 w-3.5 stroke-[2.5]" />
+                <div className="flex items-center gap-1 drop-shadow-md">
+                  <ArrowLeft className="h-4 w-4 stroke-[2.5] text-slate-900" />
+                  <ArrowRight className="h-4 w-4 stroke-[2.5] text-slate-900" />
                 </div>
               )}
             </motion.div>
@@ -123,7 +134,8 @@ export default function Testimonials() {
           {/* Cards Container with Snap Mechanics */}
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto py-6 scrollbar-none snap-x snap-mandatory scroll-smooth"
+            // Removed 'gap', added '-mx-3' to safely expand bounding box for shadows
+            className="flex overflow-x-auto py-8 -mx-3 scrollbar-none snap-x snap-mandatory scroll-smooth"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
@@ -132,7 +144,8 @@ export default function Testimonials() {
             {testimonials.map((item, idx) => (
               <div
                 key={`${item.name}-${idx}`}
-                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 snap-start"
+                // Replaced calc math with simple w-1/3 and padded the wrapper with px-3 (creates the gap safely)
+                className="w-full sm:w-1/2 lg:w-1/3 shrink-0 snap-start px-3"
               >
                 <div className="group relative h-full overflow-hidden rounded-2xl border border-neutral-200 bg-white p-8 shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:border-cyan-400/50 hover:shadow-xl">
                   {/* Decorative Quote */}

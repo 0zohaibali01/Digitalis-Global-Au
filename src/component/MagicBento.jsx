@@ -1,11 +1,10 @@
-// MagicBento.jsx
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { gsap } from 'gsap';
 import './MagicBento.css';
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
-const DEFAULT_GLOW_COLOR = '132, 0, 255';
+const DEFAULT_GLOW_COLOR = '34, 211, 238'; // Light Cyan RGB
 const MOBILE_BREAKPOINT = 768;
 
 const createParticleElement = (x, y, color = DEFAULT_GLOW_COLOR) => {
@@ -13,11 +12,11 @@ const createParticleElement = (x, y, color = DEFAULT_GLOW_COLOR) => {
   el.className = 'particle';
   el.style.cssText = `
     position: absolute;
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: rgba(${color}, 1);
-    box-shadow: 0 0 6px rgba(${color}, 0.6);
+    box-shadow: 0 0 8px rgba(${color}, 0.8);
     pointer-events: none;
     z-index: 100;
     left: ${x}px;
@@ -141,8 +140,8 @@ const ParticleCard = ({
 
       if (enableTilt) {
         gsap.to(element, {
-          rotateX: 5,
-          rotateY: 5,
+          rotateX: 3,
+          rotateY: 3,
           duration: 0.3,
           ease: 'power2.out',
           transformPerspective: 1000
@@ -183,8 +182,8 @@ const ParticleCard = ({
       const centerY = rect.height / 2;
 
       if (enableTilt) {
-        const rotateX = ((y - centerY) / centerY) * -10;
-        const rotateY = ((x - centerX) / centerX) * 10;
+        const rotateX = ((y - centerY) / centerY) * -6;
+        const rotateY = ((x - centerX) / centerX) * 6;
 
         gsap.to(element, {
           rotateX,
@@ -196,8 +195,8 @@ const ParticleCard = ({
       }
 
       if (enableMagnetism) {
-        const magnetX = (x - centerX) * 0.05;
-        const magnetY = (y - centerY) * 0.05;
+        const magnetX = (x - centerX) * 0.04;
+        const magnetY = (y - centerY) * 0.04;
 
         magnetismAnimationRef.current = gsap.to(element, {
           x: magnetX,
@@ -228,7 +227,7 @@ const ParticleCard = ({
         width: ${maxDistance * 2}px;
         height: ${maxDistance * 2}px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(${glowColor}, 0.4) 0%, rgba(${glowColor}, 0.2) 30%, transparent 70%);
+        background: radial-gradient(circle, rgba(${glowColor}, 0.35) 0%, rgba(${glowColor}, 0.15) 40%, transparent 70%);
         left: ${x - maxDistance}px;
         top: ${y - maxDistance}px;
         pointer-events: none;
@@ -293,22 +292,19 @@ const GlobalSpotlight = ({
     spotlight.className = 'global-spotlight';
     spotlight.style.cssText = `
       position: fixed;
-      width: 800px;
-      height: 800px;
+      width: 600px;
+      height: 600px;
       border-radius: 50%;
       pointer-events: none;
       background: radial-gradient(circle,
-        rgba(${glowColor}, 0.15) 0%,
-        rgba(${glowColor}, 0.08) 15%,
-        rgba(${glowColor}, 0.04) 25%,
-        rgba(${glowColor}, 0.02) 40%,
-        rgba(${glowColor}, 0.01) 65%,
+        rgba(${glowColor}, 0.25) 0%,
+        rgba(${glowColor}, 0.15) 20%,
+        rgba(${glowColor}, 0.05) 45%,
         transparent 70%
       );
       z-index: 200;
       opacity: 0;
       transform: translate(-50%, -50%);
-      mix-blend-mode: screen;
     `;
     document.body.appendChild(spotlight);
     spotlightRef.current = spotlight;
@@ -360,9 +356,9 @@ const GlobalSpotlight = ({
 
       const targetOpacity =
         minDistance <= proximity
-          ? 0.8
+          ? 0.85
           : minDistance <= fadeDistance
-            ? ((fadeDistance - minDistance) / (fadeDistance - proximity)) * 0.8
+            ? ((fadeDistance - minDistance) / (fadeDistance - proximity)) * 0.85
             : 0;
 
       gsap.to(spotlightRef.current, {
@@ -451,7 +447,7 @@ const MagicBento = ({
           const cardProps = {
             className: baseClassName,
             style: {
-              backgroundColor: card.color || 'var(--background-dark)',
+              backgroundColor: card.color || 'var(--background-card)',
               '--glow-color': glowColor
             }
           };

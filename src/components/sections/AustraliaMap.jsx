@@ -6,7 +6,7 @@ const AUSTRALIA_REGIONS = [
     name: 'New South Wales & ACT',
     capital: 'Sydney',
     coverage: '100% Remote & On-site Services',
-    pin: { cx: 400, cy: 300 }, // Scaled coordinate relative to SVG viewBox
+    pin: { cx: 400, cy: 300 },
     description: 'Serving Sydney, Newcastle, Wollongong, and Canberra.',
   },
   {
@@ -55,17 +55,15 @@ export default function AustraliaMap() {
   const [activeRegion, setActiveRegion] = useState(AUSTRALIA_REGIONS[0])
 
   return (
-    <section className="relative overflow-hidden bg-brand-dark py-20 px-6 md:px-8 md:py-28 text-white">
+    <section className="relative overflow-hidden bg-brand-dark px-6 py-20 text-white md:px-8 md:py-28">
       {/* Background Ambient Glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -z-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[130px]" />
 
-      {/* Aligned to max-w-7xl matching the Navbar width */}
-      <div className="mx-auto max-w-7xl relative z-10">
-        
+      <div className="relative z-10 mx-auto max-w-7xl">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
+        <div className="mb-16 max-w-3xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-cyan-300">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
+            <span className="h-2 w-2 animate-ping rounded-full bg-cyan-400" />
             Australia-Wide Reach
           </span>
 
@@ -79,11 +77,10 @@ export default function AustraliaMap() {
         </div>
 
         {/* Interactive Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
           {/* Left Column: Interactive State Selector Cards */}
-          <div className="lg:col-span-5 space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">
+          <div className="space-y-3 lg:col-span-5">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-400">
               Select Region
             </p>
             {AUSTRALIA_REGIONS.map((region) => {
@@ -93,22 +90,24 @@ export default function AustraliaMap() {
                   key={region.id}
                   onClick={() => setActiveRegion(region)}
                   onMouseEnter={() => setActiveRegion(region)}
-                  className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 flex items-center justify-between ${
+                  className={`flex w-full items-center justify-between rounded-2xl border p-4 text-left transition-all duration-300 ${
                     isActive
-                      ? 'bg-slate-800/90 border-cyan-400/60 shadow-[0_0_20px_rgba(34,211,238,0.15)] translate-x-2'
-                      : 'bg-slate-900/40 border-slate-800 hover:border-slate-700 hover:bg-slate-900/80'
+                      ? 'translate-x-2 border-cyan-400/60 bg-slate-800/90 shadow-[0_0_20px_rgba(34,211,238,0.15)]'
+                      : 'border-slate-800 bg-slate-900/40 hover:border-slate-700 hover:bg-slate-900/80'
                   }`}
                 >
                   <div>
-                    <h3 className={`font-bold text-base ${isActive ? 'text-cyan-300' : 'text-white'}`}>
+                    <h3 className={`text-base font-bold ${isActive ? 'text-cyan-300' : 'text-white'}`}>
                       {region.name}
                     </h3>
-                    <p className="text-xs text-slate-400 mt-0.5">{region.capital}</p>
+                    <p className="mt-0.5 text-xs text-slate-400">{region.capital}</p>
                   </div>
 
-                  <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-                    isActive ? 'bg-cyan-400/20 text-cyan-300' : 'bg-slate-800 text-slate-400'
-                  }`}>
+                  <span
+                    className={`rounded-full px-2.5 py-1 text-xs font-medium ${
+                      isActive ? 'bg-cyan-400/20 text-cyan-300' : 'bg-slate-800 text-slate-400'
+                    }`}
+                  >
                     {region.coverage.split(' ')[0]}
                   </span>
                 </button>
@@ -117,13 +116,12 @@ export default function AustraliaMap() {
           </div>
 
           {/* Right Column: Animated Vector Map Display */}
-          <div className="lg:col-span-7 relative flex flex-col items-center justify-center p-6 bg-slate-900/50 border border-slate-800 rounded-3xl backdrop-blur-sm">
-            
-            <div className="relative w-full max-w-[500px] aspect-[4/3]">
+          <div className="relative flex flex-col items-center justify-center rounded-3xl border border-slate-800 bg-slate-900/50 p-6 backdrop-blur-sm lg:col-span-7">
+            <div className="relative aspect-[4/3] w-full max-w-[500px]">
               {/* Australia Vector Map SVG */}
               <svg
                 viewBox="0 0 500 420"
-                className="w-full h-full drop-shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                className="h-full w-full drop-shadow-[0_0_15px_rgba(6,182,212,0.15)]"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -134,25 +132,39 @@ export default function AustraliaMap() {
                   strokeDasharray="4 2"
                 />
 
-                {/* Animated Pulsing Location Pins */}
+                {/* Location Pins */}
                 {AUSTRALIA_REGIONS.map((region) => {
                   const isActive = activeRegion.id === region.id
                   return (
                     <g key={region.id} className="cursor-pointer" onClick={() => setActiveRegion(region)}>
+                      {/* Native SVG Center-based Pulsing Wave (Replaces buggy Tailwind CSS ping) */}
                       {isActive && (
                         <circle
                           cx={region.pin.cx}
                           cy={region.pin.cy}
-                          r="18"
-                          className="animate-ping fill-cyan-400/20 stroke-cyan-400/60"
+                          className="fill-cyan-400/20 stroke-cyan-400/60"
                           strokeWidth="1"
-                        />
+                        >
+                          <animate
+                            attributeName="r"
+                            values="6;24"
+                            dur="1.5s"
+                            repeatCount="indefinite"
+                          />
+                          <animate
+                            attributeName="opacity"
+                            values="0.8;0"
+                            dur="1.5s"
+                            repeatCount="indefinite"
+                          />
+                        </circle>
                       )}
 
+                      {/* Outer Ring */}
                       <circle
                         cx={region.pin.cx}
                         cy={region.pin.cy}
-                        r={isActive ? "12" : "6"}
+                        r={isActive ? '12' : '6'}
                         className={`transition-all duration-300 ${
                           isActive
                             ? 'fill-cyan-500/30 stroke-cyan-400 stroke-2'
@@ -160,20 +172,22 @@ export default function AustraliaMap() {
                         }`}
                       />
 
+                      {/* Inner Dot */}
                       <circle
                         cx={region.pin.cx}
                         cy={region.pin.cy}
-                        r={isActive ? "5" : "3"}
+                        r={isActive ? '5' : '3'}
                         className={`transition-all duration-300 ${
                           isActive ? 'fill-cyan-300 shadow-[0_0_10px_#22d3ee]' : 'fill-slate-400'
                         }`}
                       />
 
+                      {/* Label */}
                       <text
                         x={region.pin.cx}
                         y={region.pin.cy - 14}
                         textAnchor="middle"
-                        className={`text-[11px] font-semibold transition-all duration-300 pointer-events-none ${
+                        className={`pointer-events-none text-[11px] font-semibold transition-all duration-300 ${
                           isActive ? 'fill-cyan-300 opacity-100' : 'fill-slate-500 opacity-60'
                         }`}
                       >
@@ -186,25 +200,22 @@ export default function AustraliaMap() {
             </div>
 
             {/* Active Region Information Footer */}
-            <div className="w-full mt-6 p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div className="mt-6 flex w-full flex-col items-center justify-between gap-4 rounded-xl border border-slate-700/60 bg-slate-800/60 p-4 text-center md:flex-row md:text-left">
               <div>
-                <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
+                <span className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
                   Active Region: {activeRegion.name}
                 </span>
-                <p className="text-sm text-slate-300 mt-0.5">{activeRegion.description}</p>
+                <p className="mt-0.5 text-sm text-slate-300">{activeRegion.description}</p>
               </div>
 
               <div className="shrink-0">
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                <span className="inline-block rounded-full border border-cyan-500/30 bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-300">
                   {activeRegion.coverage}
                 </span>
               </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
     </section>
   )

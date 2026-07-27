@@ -1,10 +1,17 @@
 :root {
   --white: #ffffff;
-  /* Brand Teal / Cyan Palettes */
-  --brand-primary: rgba(16, 61, 77, 1);
-  --brand-glow: rgba(16, 61, 77, 0.15);
-  --brand-border: rgba(16, 61, 77, 0.12);
-  --border-color: rgba(16, 61, 77, 0.1);
+
+  /* Primary Brand Color - Cyan */
+  --brand-primary: rgb(34, 211, 238);
+
+  /* Cyan Glow */
+  --brand-glow: rgba(34, 211, 238, 0.15);
+
+  /* Borders */
+  --brand-border: rgba(34, 211, 238, 0.20);
+  --border-color: rgba(34, 211, 238, 0.12);
+
+  /* Card Background */
   --background-card: #ffffff;
 }
 
@@ -27,17 +34,19 @@
   border: 1px solid var(--border-color);
   background: var(--background-card);
   box-shadow: 0 4px 20px -2px rgba(16, 61, 77, 0.05);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 
   --glow-x: 50%;
   --glow-y: 50%;
   --glow-intensity: 0;
   --glow-radius: 250px;
+  --glow-color: 34, 211, 238; /* Default Cyan RGB */
 }
 
 .magic-bento-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 30px -10px rgba(16, 61, 77, 0.12);
+  border-color: rgba(34, 211, 238, 0.5);
+  box-shadow: 0 20px 30px -10px rgba(34, 211, 238, 0.2);
 }
 
 /* Grid Layout Tweaks */
@@ -53,7 +62,7 @@
   }
 }
 
-/* Border Glow Effect for Light Mode */
+/* Border Glow Effect for Cyan Theme */
 .magic-bento-card--border-glow::after {
   content: '';
   position: absolute;
@@ -61,8 +70,8 @@
   padding: 2px;
   background: radial-gradient(
     var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-    rgba(16, 61, 77, calc(var(--glow-intensity) * 0.8)) 0%,
-    rgba(16, 61, 77, calc(var(--glow-intensity) * 0.3)) 40%,
+    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.9)) 0%,
+    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4)) 40%,
     transparent 70%
   );
   border-radius: inherit;
@@ -89,14 +98,14 @@
   content: '';
   position: absolute;
   inset: -2px;
-  background: rgba(16, 61, 77, 0.15);
+  background: rgba(34, 211, 238, 0.3);
   border-radius: 50%;
   z-index: -1;
 }
 
 /* Global Spotlight for Light Theme */
 .global-spotlight {
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
   will-change: transform, opacity;
   z-index: 200 !important;
   pointer-events: none;

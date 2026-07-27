@@ -33,7 +33,7 @@ export default function CaseStudies() {
               className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-neutral-200/80 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-brand/20 hover:shadow-[0_20px_40px_-15px_rgba(16,61,77,0.12)]"
             >
               {/* Top Accent Bar Animation */}
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-brand to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
               <div>
                 {/* Meta & Key Metric Row - Mobile Friendly Layout */}

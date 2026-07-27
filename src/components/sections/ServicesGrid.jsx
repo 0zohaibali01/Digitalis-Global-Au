@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
-import { ArrowRight, ArrowUpRight, Search, Target, Megaphone, MonitorSmartphone, ShoppingCart, BrushCleaning, PenTool, TrendingUp } from 'lucide-react'
+import { ArrowUpRight, Search, Target, Megaphone, MonitorSmartphone, ShoppingCart, BrushCleaning, PenTool, TrendingUp } from 'lucide-react'
 import { services } from '../../data/services'
 import Preheading from '../ui/Preheading'
 
@@ -14,241 +13,110 @@ const iconMap = {
   TrendingUp,
 }
 
+// Map services to dynamic Bento grid spans
+const getBentoSpan = (index) => {
+  if (index === 0) return 'lg:col-span-8 lg:row-span-2 min-h-[420px]'
+  if (index === 1) return 'lg:col-span-4 min-h-[260px]'
+  if (index === 2) return 'lg:col-span-4 min-h-[260px]'
+  if (index === 3) return 'lg:col-span-8 min-h-[320px]'
+  return 'lg:col-span-4 min-h-[280px]'
+}
+
 export default function ServicesGrid() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const cardRefs = useRef([])
-
-  // Only run scroll observer on desktop screens where scrolling cards exist
-  useEffect(() => {
-    const isDesktop = window.matchMedia('(min-width: 1024px)').matches
-    if (!isDesktop) return
-
-    const observerOptions = {
-      root: null,
-      rootMargin: '-20% 0px -20% 0px',
-      threshold: 0.2,
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const index = Number(entry.target.getAttribute('data-index'))
-          setActiveIndex(index)
-        }
-      })
-    }, observerOptions)
-
-    cardRefs.current.forEach((card) => {
-      if (card) observer.observe(card)
-    })
-
-    return () => observer.disconnect()
-  }, [])
-
-  const handleSelect = (index) => {
-    setActiveIndex(index)
-    const isDesktop = window.matchMedia('(min-width: 1024px)').matches
-    if (isDesktop) {
-      cardRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }
-  }
-
   return (
     <section id="services" className="relative bg-white px-4 py-12 sm:px-6 md:px-8 md:py-28">
       <div className="mx-auto max-w-7xl">
         
         {/* Header */}
-        <div className="max-w-3xl mb-8 md:mb-16">
+        <div className="mb-12 max-w-3xl md:mb-16">
           <Preheading className="text-brand">Services</Preheading>
-          <h2 className="mt-3 text-2xl font-bold tracking-tight text-brand sm:text-4xl md:text-5xl font-display">
+          <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-brand sm:text-4xl md:text-5xl">
             SEO, Google Ads, web development and e-commerce in one team.
           </h2>
         </div>
 
-        {/* MOBILE & TABLET VIEW (Single Selected Card Tab View) */}
-        <div className="block lg:hidden">
-          {/* Scrollable Pills Bar */}
-          <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-none">
-            {services.map((service, index) => {
-              const isActive = activeIndex === index
-              return (
-                <button
-                  key={service.title}
-                  onClick={() => handleSelect(index)}
-                  className={`shrink-0 rounded-xl px-4 py-2.5 text-xs font-bold transition-all ${
-                    isActive
-                      ? 'bg-[#0C3A4C] text-white shadow-md'
-                      : 'bg-slate-100 text-slate-700 active:bg-slate-200'
-                  }`}
-                >
-                  {service.title}
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Active Mobile Card */}
-          {(() => {
-            const service = services[activeIndex]
+        {/* Bento Box Grid Container */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-12 auto-rows-[minmax(220px,auto)]">
+          {services.map((service, index) => {
             const Icon = iconMap[service.icon]
-            const href = "/au/services/" + service.slug
+            const href = `/au/services/${service.slug}`
+            const bentoSpanClass = getBentoSpan(index)
+            const isLargeCard = index === 0 || index === 3
 
             return (
-              <div className="relative mt-2 overflow-hidden rounded-2xl bg-[#0C3A4C] p-6 text-white border-2 border-cyan-400/80 shadow-xl">
-                {service.image && (
-                  <div className="absolute inset-0 z-0 opacity-20">
-                    <img src={service.image} alt={service.title} className="h-full w-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0C3A4C] via-[#0C3A4C]/80 to-transparent" />
+              <div
+                key={service.title}
+                className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl bg-[#0C3A4C] p-7 md:p-9 text-white transition-all duration-500 border border-white/10 hover:border-cyan-400/80 hover:shadow-[0_12px_40px_rgba(34,211,238,0.25)] ${bentoSpanClass}`}
+              >
+                {/* Background Image */}
+                {service.image ? (
+                  <div className="absolute inset-0 z-0 overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                    />
+                    {/* Default Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0C3A4C]/90 via-[#0C3A4C]/50 to-[#0C3A4C]/30 transition-opacity duration-500 group-hover:opacity-40" />
                   </div>
+                ) : (
+                  <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#0C3A4C] via-slate-900 to-[#0C3A4C]" />
                 )}
 
-                <div className="relative z-10 flex items-center justify-between">
+                {/* Hover Backdrop Blur & Focus Overlay */}
+                <div className="absolute inset-0 z-10 bg-[#0C3A4C]/75 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:opacity-100" />
+
+                {/* Ambient Radial Cyan Glow on Hover */}
+                <div className="pointer-events-none absolute -right-12 -top-12 z-20 h-44 w-44 rounded-full bg-cyan-400/0 blur-2xl transition-all duration-500 group-hover:bg-cyan-400/30" />
+
+                {/* Top Action Bar (Always Visible) */}
+                <div className="relative z-20 flex items-center justify-between">
                   {Icon && (
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-400 text-[#0C3A4C]">
-                      <Icon className="h-5 w-5" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0C3A4C]/80 text-cyan-300 backdrop-blur-md border border-white/10 transition-colors duration-300 group-hover:bg-cyan-400 group-hover:text-[#0C3A4C] group-hover:border-transparent">
+                      <Icon className="h-6 w-6 stroke-[2]" />
                     </div>
                   )}
 
                   <a
                     href={href}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md"
+                    aria-label={`Learn more about ${service.title}`}
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0C3A4C]/80 text-white backdrop-blur-md border border-white/10 transition-all duration-300 group-hover:rotate-45 group-hover:bg-cyan-400 group-hover:text-[#0C3A4C] group-hover:border-transparent"
                   >
-                    <ArrowUpRight className="h-4 w-4 stroke-[2.5]" />
+                    <ArrowUpRight className="h-5 w-5 stroke-[2.5]" />
                   </a>
                 </div>
 
-                <div className="relative z-10 mt-6 space-y-2">
-                  <h3 className="text-xl font-bold font-display">{service.title}</h3>
-                  <p className="text-xs leading-relaxed text-slate-300">{service.description}</p>
+                {/* Bottom Content Area */}
+                <div className="relative z-20 mt-8">
+                  {/* Title (Always Visible) */}
+                  <h3 className={`font-display font-bold tracking-tight text-white transition-colors duration-300 group-hover:text-cyan-300 ${isLargeCard ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'}`}>
+                    {service.title}
+                  </h3>
 
-                  <div className="pt-3">
-                    <a
-                      href={href}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-cyan-400"
-                    >
-                      <span>Explore Service</span>
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
+                  {/* Description & Link: Hidden by default, reveals on hover */}
+                  <div className="grid grid-rows-[0fr] transition-all duration-500 group-hover:grid-rows-[1fr] group-hover:mt-3">
+                    <div className="overflow-hidden opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      <p className={`leading-relaxed text-slate-200 ${isLargeCard ? 'text-base max-w-xl' : 'text-sm'}`}>
+                        {service.description}
+                      </p>
+
+                      <div className="pt-4">
+                        <a
+                          href={href}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-cyan-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-cyan-400"
+                        >
+                          <span>Explore Service</span>
+                          <ArrowUpRight className="h-4 w-4" />
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
               </div>
             )
-          })()}
-        </div>
-
-        {/* DESKTOP VIEW (Sticky Scroll Layout) */}
-        <div className="hidden lg:grid lg:grid-cols-12 lg:gap-8 items-start">
-          
-          {/* Left Sticky Nav */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28">
-            <div className="space-y-2">
-              {services.map((service, index) => {
-                const isActive = activeIndex === index
-
-                return (
-                  <button
-                    key={service.title}
-                    onClick={() => handleSelect(index)}
-                    className={`group flex w-full items-center gap-3.5 rounded-2xl p-3.5 text-left transition-all duration-200 ${
-                      isActive
-                        ? 'bg-[#0C3A4C] text-white shadow-md shadow-[#0C3A4C]/20'
-                        : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
-                    }`}
-                  >
-                    <div
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all duration-200 ${
-                        isActive
-                          ? 'bg-cyan-400 text-[#0C3A4C] translate-x-1'
-                          : 'bg-transparent text-slate-400 group-hover:text-slate-950'
-                      }`}
-                    >
-                      <ArrowRight className="h-4 w-4 stroke-[2.5]" />
-                    </div>
-
-                    <span
-                      className={`text-base font-bold font-display transition-transform duration-200 ${
-                        isActive ? 'text-white translate-x-1' : ''
-                      }`}
-                    >
-                      {service.title}
-                    </span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Right Cards Stack */}
-          <div className="lg:col-span-7 space-y-12">
-            {services.map((service, index) => {
-              const Icon = iconMap[service.icon]
-              const href = "/au/services/" + service.slug
-              const isActive = activeIndex === index
-
-              return (
-                <div
-                  key={service.title}
-                  data-index={index}
-                  ref={(el) => (cardRefs.current[index] = el)}
-                  className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl bg-[#0C3A4C] p-10 min-h-[380px] transition-all duration-300 transform-gpu ${
-                    isActive
-                      ? 'border-2 border-cyan-400/80 shadow-[0_12px_40px_rgba(34,211,238,0.2)] opacity-100'
-                      : 'border border-white/10 opacity-50'
-                  }`}
-                >
-                  {service.image ? (
-                    <div className="absolute inset-0 z-0 overflow-hidden opacity-25">
-                      <img
-                        src={service.image}
-                        alt={service.title}
-                        loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0C3A4C] via-[#0C3A4C]/80 to-transparent" />
-                    </div>
-                  ) : (
-                    <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#0C3A4C] via-slate-900 to-[#0C3A4C]" />
-                  )}
-
-                  <div className="relative z-10 flex items-center justify-between">
-                    {Icon && (
-                      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-colors duration-200 ${
-                        isActive ? 'bg-cyan-400 text-[#0C3A4C]' : 'bg-white/10 text-cyan-400'
-                      }`}>
-                        <Icon className="h-6 w-6" />
-                      </div>
-                    )}
-
-                    <a
-                      href={href}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-all duration-200 group-hover:bg-cyan-400 group-hover:text-[#0C3A4C] group-hover:rotate-45"
-                    >
-                      <ArrowUpRight className="h-5 w-5 stroke-[2.5]" />
-                    </a>
-                  </div>
-
-                  <div className="relative z-10 mt-12 space-y-3">
-                    <h3 className="text-3xl font-bold tracking-tight text-white font-display">
-                      {service.title}
-                    </h3>
-
-                    <p className="text-base leading-relaxed text-slate-300 max-w-xl">
-                      {service.description}
-                    </p>
-
-                    <a
-                      href={href}
-                      className="inline-flex items-center gap-2 pt-2 text-xs font-bold uppercase tracking-wider text-cyan-400 transition-colors hover:text-cyan-300"
-                    >
-                      <span>Explore Service</span>
-                      <ArrowUpRight className="h-4 w-4" />
-                    </a>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
+          })}
         </div>
 
       </div>

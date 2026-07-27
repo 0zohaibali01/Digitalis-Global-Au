@@ -38,19 +38,19 @@ export default function ValueProps() {
 
         <div className="mt-12">
           <MagicBento
-            cardsData={items.map(item => ({ ...item, color: '#ffffff' }))} // White background cards
-            glowColor="16, 61, 77" // Brand teal glow
+            cardsData={items.map(item => ({ ...item, color: '#ffffff' }))}
+            glowColor="34, 211, 238" // Bright Cyan Glow (RGB)
             enableTilt={true}
             enableMagnetism={true}
             renderCardContent={(item) => {
               const Icon = item.icon
               return (
-                <div className="flex flex-col justify-between h-full w-full group">
+                <div className="flex flex-col justify-between h-full w-full group relative z-10">
                   <div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-light text-brand group-hover:bg-brand group-hover:text-white transition-colors duration-300">
-                      <Icon className="h-6 w-6" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0C3A4C]/5 text-[#0C3A4C] group-hover:bg-cyan-400 group-hover:text-[#0C3A4C] transition-colors duration-300">
+                      <Icon className="h-6 w-6 stroke-[2]" />
                     </div>
-                    <h3 className="mt-6 text-xl font-bold text-brand font-display">
+                    <h3 className="mt-6 text-xl font-bold text-[#0C3A4C] font-display transition-colors duration-300 group-hover:text-cyan-600">
                       {item.title}
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-neutral-600">
@@ -60,9 +60,9 @@ export default function ValueProps() {
                   
                   <a
                     href="#contact"
-                    className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand transition-all group-hover:translate-x-1"
+                    className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#0C3A4C] transition-all group-hover:translate-x-1 group-hover:text-cyan-600"
                   >
-                    See how we work <ArrowRight className="h-4 w-4" />
+                    See how we work <ArrowRight className="h-4 w-4 text-cyan-500" />
                   </a>
                 </div>
               )
