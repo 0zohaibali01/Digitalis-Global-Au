@@ -154,7 +154,7 @@ export default function Navbar() {
                     {/* Desktop & Mobile Logo */}
                     <Link to="/au" className="flex items-center shrink-0">
                         {/* ADDED: h-10 sm:h-12 for mobile to prevent logo from breaking layout */}
-                        <div className="h-10 sm:h-12 lg:h-28 w-auto lg:-ml-2 lg:scale-105 transition-all duration-300 flex items-center">
+                        <div className="h-20 sm:h-auto lg:h-28 w-auto lg:-ml-2 lg:scale-105 transition-all duration-300 flex items-center">
                             <img
                                 src="/images/logo.webp"
                                 alt="Digitalis Global"
@@ -321,7 +321,7 @@ export default function Navbar() {
                                             src="/images/logo.webp"
                                             alt="Digitalis Global"
                                             // ADDED: changed from h-24 sm:h-28 down to h-10 sm:h-12 so it fits inline with the X button properly
-                                            className="h-10 sm:h-12 w-auto object-contain"
+                                            className="h-20 sm:h-12 w-auto object-contain"
                                         />
                                     </Link>
 
