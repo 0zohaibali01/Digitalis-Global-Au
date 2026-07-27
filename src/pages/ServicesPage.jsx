@@ -42,71 +42,71 @@ export default function ServicesPage() {
         <div className="relative mx-auto max-w-7xl">
           <Reveal>
             <Breadcrumbs items={[{ label: 'Services' }]} />
-            <Preheading textClassName="text-cyan-200">Our services</Preheading>
+            <Preheading textClassName="text-cyan-400">Our services</Preheading>
             <h1 className="mt-6 max-w-4xl font-display text-4xl font-extrabold leading-[1.06] tracking-tight sm:text-5xl lg:text-7xl">The digital disciplines that make growth easier.</h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 md:text-xl">From your website to the campaigns that bring people to it, our Australian team joins up the work that moves customers from interest to action.</p>
           </Reveal>
         </div>
       </section>
 
-      <section className="bg-white px-6 py-20 md:px-8 md:py-32">
+      <section className="bg-slate-50 px-6 py-20 md:px-8 md:py-32">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-7 md:grid-cols-2">
-            {servicePages.map((service, index) => {
-              const isFeatured = index % 3 === 0
-              return (
-                <Reveal key={service.slug} className="h-full">
-                  <Link
-                    to={`/au/services/${service.slug}`}
-                    aria-label={`Explore ${service.title}`}
-                    className={`group relative block h-full overflow-hidden rounded-3xl border p-8 transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/50 md:p-10 ${
-                      isFeatured
-                        ? 'border-cyan-400/20 bg-brand-dark text-white hover:-translate-y-2 hover:border-cyan-300 hover:shadow-[0_24px_50px_-18px_rgba(14,165,233,0.55)]'
-                        : 'border-brand/10 bg-brand-light hover:-translate-y-2 hover:border-cyan-400/60 hover:bg-white hover:shadow-[0_24px_50px_-18px_rgba(16,61,77,0.25)]'
-                    }`}
-                  >
-                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                      <img src={service.image} alt="" className="h-full w-full object-cover opacity-[0.07] transition-transform duration-700 group-hover:scale-110" />
-                    </div>
-                    <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-400/10 blur-3xl transition-transform duration-500 group-hover:scale-150" />
-                    <div className="relative flex h-full flex-col">
-                      <div className="flex items-center justify-between gap-4">
-                        <p className={`text-xs font-bold uppercase tracking-[0.2em] ${isFeatured ? 'text-cyan-300' : 'text-cyan-700'}`}>Digitalis Global service</p>
-                        <span className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:rotate-45 ${isFeatured ? 'bg-white/10 text-cyan-300 group-hover:bg-cyan-400 group-hover:text-brand-dark' : 'bg-white text-brand shadow-sm group-hover:bg-cyan-400 group-hover:text-brand-dark'}`}>
-                          <ArrowRight className="h-5 w-5" />
-                        </span>
-                      </div>
-                      <h2 className={`mt-7 font-display text-2xl font-bold transition-colors md:text-3xl ${isFeatured ? 'text-white' : 'text-brand'}`}>{service.title}</h2>
-                      <p className={`mt-4 max-w-lg leading-7 ${isFeatured ? 'text-slate-300' : 'text-neutral-600'}`}>{service.description}</p>
-                      <ul className={`mt-7 space-y-2 text-sm ${isFeatured ? 'text-slate-200' : 'text-brand'}`}>
-                        {service.deliverables.slice(0, 2).map((item) => (
-                          <li key={item} className="flex gap-2">
-                            <Check className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      <span className={`mt-8 inline-flex items-center gap-2 font-bold ${isFeatured ? 'text-cyan-300' : 'text-brand'}`}>
-                        Explore service
-                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
+          <div className="grid gap-8 md:grid-cols-2">
+            {servicePages.map((service) => (
+              <Reveal key={service.slug} className="h-full">
+                <Link
+                  to={`/au/services/${service.slug}`}
+                  aria-label={`Explore ${service.title}`}
+                  className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2.5rem] border border-slate-200/80 bg-white p-8 sm:p-10 shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50 hover:shadow-[0_20px_50px_rgba(12,58,76,0.08)]"
+                >
+                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    <img src={service.image} alt="" className="h-full w-full object-cover opacity-[0.04] transition-transform duration-700 group-hover:scale-105" />
+                  </div>
+                  
+                  <div>
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-600">Digitalis Global Capability</span>
+                      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 text-brand transition-all duration-300 group-hover:bg-cyan-400 group-hover:text-brand group-hover:rotate-45 shadow-sm">
+                        <ArrowRight className="h-5 w-5" />
                       </span>
                     </div>
-                  </Link>
-                </Reveal>
-              )
-            })}
+
+                    <h2 className="mt-6 font-display text-2xl font-bold text-brand transition-colors md:text-3xl group-hover:text-cyan-600">{service.title}</h2>
+                    <p className="mt-3 text-sm leading-relaxed text-neutral-600 md:text-base">{service.description}</p>
+                    
+                    <ul className="mt-6 space-y-2 text-sm text-neutral-700">
+                      {service.deliverables.slice(0, 2).map((item) => (
+                        <li key={item} className="flex items-start gap-2.5">
+                          <Check className="mt-1 h-4 w-4 shrink-0 text-cyan-500" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-slate-100">
+                    <span className="inline-flex items-center gap-2 text-sm font-bold text-brand transition-all duration-200 group-hover:gap-3 group-hover:text-cyan-600">
+                      Explore service
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-brand-light px-6 py-16 md:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-3xl border border-brand/10 bg-white p-8 md:flex-row md:items-center md:justify-between">
+      <section className="bg-white px-6 py-16 md:px-8 border-t border-slate-100">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 rounded-[2rem] border border-slate-200/80 bg-slate-50 p-8 md:flex-row md:items-center md:justify-between shadow-sm">
           <div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-cyan-300"><Search className="h-5 w-5" /></div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600"><Search className="h-5 w-5" /></div>
             <h2 className="mt-4 font-display text-2xl font-bold text-brand">Not sure where to begin?</h2>
-            <p className="mt-2 text-neutral-600">We will help you focus on the opportunity with the clearest path to impact.</p>
+            <p className="mt-2 text-sm text-neutral-600">We will help you focus on the opportunity with the clearest path to impact.</p>
           </div>
-          <a href="#contact" className="inline-flex items-center gap-2 font-bold text-brand">Talk through your goals <ArrowRight className="h-4 w-4" /></a>
+          <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-bold text-white hover:bg-brand/90 transition-all">
+            Talk through your goals <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
       </section>
       <CTABand />

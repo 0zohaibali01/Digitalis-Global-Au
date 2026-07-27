@@ -117,76 +117,86 @@ export default function CaseStudiesPage() {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-7 lg:grid-cols-3">
             {caseStudies.map((study, index) => (
-              <Reveal
+              <Link
                 key={study.slug}
-                className={`group relative overflow-hidden rounded-3xl border p-8 md:p-9 transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/60 hover:shadow-[0_20px_50px_rgba(34,211,238,0.18)] ${index === 0
-                    ? 'border-cyan-400/30 bg-brand-dark text-white'
-                    : 'border-brand/10 bg-brand-light hover:bg-cyan-50'
-                  }`}
+                to={`/au/case-studies/${study.slug}`}
+                className="block group"
               >
-                {/* Animated Glow */}
-                <div className="absolute right-0 top-0 h-36 w-36 rounded-full bg-cyan-400/10 blur-3xl transition-all duration-500 group-hover:scale-150 group-hover:bg-cyan-400/20" />
+                <Reveal
+                  className={`relative overflow-hidden rounded-3xl border p-8 md:p-9 transition-all duration-500 group-hover:-translate-y-2 group-hover:border-cyan-400/60 group-hover:shadow-[0_20px_50px_rgba(34,211,238,0.18)] ${
+                    index === 0
+                      ? 'border-cyan-400/30 bg-brand-dark text-white'
+                      : 'border-brand/10 bg-brand-light group-hover:bg-cyan-50'
+                  }`}
+                >
+                  {/* Animated Glow */}
+                  <div className="absolute right-0 top-0 h-36 w-36 rounded-full bg-cyan-400/10 blur-3xl transition-all duration-500 group-hover:scale-150 group-hover:bg-cyan-400/20" />
 
-                <div className="relative">
-                  <div className="flex items-center justify-between gap-4">
-                    <p
-                      className={`text-xs font-bold uppercase tracking-[0.18em] transition-colors duration-300 ${index === 0
-                          ? 'text-cyan-300'
-                          : 'text-cyan-700 group-hover:text-cyan-500'
+                  <div className="relative">
+                    <div className="flex items-center justify-between gap-4">
+                      <p
+                        className={`text-xs font-bold uppercase tracking-[0.18em] transition-colors duration-300 ${
+                          index === 0
+                            ? 'text-cyan-300'
+                            : 'text-cyan-700 group-hover:text-cyan-500'
                         }`}
+                      >
+                        {study.industry}
+                      </p>
+
+                      <span
+                        className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold transition-all duration-300 ${
+                          index === 0
+                            ? 'bg-cyan-400/15 text-cyan-200 group-hover:bg-cyan-400 group-hover:text-slate-950'
+                            : 'bg-white text-brand ring-1 ring-brand/10 group-hover:bg-cyan-400 group-hover:text-slate-950 group-hover:ring-cyan-400'
+                        }`}
+                      >
+                        <TrendingUp className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-12" />
+                        {study.metric}
+                      </span>
+                    </div>
+
+                    <h2
+                      className={`mt-7 font-display text-3xl font-bold transition-colors duration-300 ${
+                        index === 0
+                          ? 'text-white group-hover:text-cyan-300'
+                          : 'text-brand group-hover:text-cyan-600'
+                      }`}
                     >
-                      {study.industry}
+                      {study.client}
+                    </h2>
+
+                    <p
+                      className={`mt-4 leading-7 transition-colors duration-300 ${
+                        index === 0
+                          ? 'text-slate-300 group-hover:text-slate-200'
+                          : 'text-neutral-600 group-hover:text-neutral-700'
+                      }`}
+                    >
+                      {study.summary}
                     </p>
 
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold transition-all duration-300 ${index === 0
-                          ? 'bg-cyan-400/15 text-cyan-200 group-hover:bg-cyan-400 group-hover:text-slate-950'
-                          : 'bg-white text-brand ring-1 ring-brand/10 group-hover:bg-cyan-400 group-hover:text-slate-950 group-hover:ring-cyan-400'
-                        }`}
+                    <div
+                      className={`mt-8 border-t pt-6 transition-colors duration-300 ${
+                        index === 0
+                          ? 'border-white/10 group-hover:border-cyan-400/30'
+                          : 'border-brand/10 group-hover:border-cyan-400/30'
+                      }`}
                     >
-                      <TrendingUp className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-12" />
-                      {study.metric}
-                    </span>
-                  </div>
-
-                  <h2
-                    className={`mt-7 font-display text-3xl font-bold transition-colors duration-300 ${index === 0
-                        ? 'text-white group-hover:text-cyan-300'
-                        : 'text-brand group-hover:text-cyan-600'
-                      }`}
-                  >
-                    {study.client}
-                  </h2>
-
-                  <p
-                    className={`mt-4 leading-7 transition-colors duration-300 ${index === 0
-                        ? 'text-slate-300 group-hover:text-slate-200'
-                        : 'text-neutral-600 group-hover:text-neutral-700'
-                      }`}
-                  >
-                    {study.summary}
-                  </p>
-
-                  <div
-                    className={`mt-8 border-t pt-6 transition-colors duration-300 ${index === 0
-                        ? 'border-white/10 group-hover:border-cyan-400/30'
-                        : 'border-brand/10 group-hover:border-cyan-400/30'
-                      }`}
-                  >
-                    <Link
-                      to={`/au/case-studies/${study.slug}`}
-                      className={`inline-flex items-center gap-2 font-bold transition-all duration-300 ${index === 0
-                          ? 'text-cyan-300 group-hover:text-cyan-400'
-                          : 'text-brand group-hover:text-cyan-600'
+                      <span
+                        className={`inline-flex items-center gap-2 font-bold transition-all duration-300 ${
+                          index === 0
+                            ? 'text-cyan-300 group-hover:text-cyan-400'
+                            : 'text-brand group-hover:text-cyan-600'
                         }`}
-                    >
-                      Read case study
-
-                      <ArrowRight className="h-4 w-4 transition-all duration-300 group-hover:translate-x-2 group-hover:text-cyan-400" />
-                    </Link>
+                      >
+                        Read case study
+                        <ArrowRight className="h-4 w-4 transition-all duration-300 group-hover:translate-x-2 group-hover:text-cyan-400" />
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Reveal>
+                </Reveal>
+              </Link>
             ))}
           </div>
         </div>
