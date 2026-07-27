@@ -113,6 +113,27 @@ export default function Navbar() {
         }
     }, [isOpen])
 
+    const handleContactClick = (e) => {
+        const contactSection = document.getElementById('contact')
+
+        if (closeMobileMenu) closeMobileMenu()
+
+        if (contactSection) {
+            e.preventDefault()
+            const navbarHeight = isScrolled ? 80 : 100
+            const end =
+                contactSection.getBoundingClientRect().top +
+                window.pageYOffset -
+                navbarHeight
+
+            window.scrollTo({
+                top: end,
+                behavior: 'smooth',
+            })
+        } else {
+            navigate('/au/contact')
+        }
+    }
 
     const triggerClasses =
         'group relative inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent data-[state=open]:border-accent/40 data-[state=open]:bg-accent/10 data-[state=open]:text-white data-[state=open]:shadow-[0_0_16px_rgba(56,189,248,0.35)] ' +
@@ -125,41 +146,45 @@ export default function Navbar() {
 
     return (
         <header
-            className={`fixed inset-x-0 top-0 z-50 flex justify-center px-6 md:px-8 transition-all duration-1000 ${isScrolled ? 'pt-3' : 'pt-0'
-                }`}
+            className={`fixed inset-x-0 top-0 z-50 flex justify-center px-6 md:px-8 transition-all duration-1000 ${
+                isScrolled ? 'pt-3' : 'pt-0'
+            }`}
             style={{
                 transitionTimingFunction: 'cubic-bezier(0.22, 1.2, 0.36, 1)',
             }}
         >
             <div
-                className={`relative w-full max-w-7xl transition-all duration-1000 ${isScrolled
-                    ? 'rounded-2xl border border-white/10 bg-brand/80 shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl'
-                    : 'border-b border-white/10 bg-transparent backdrop-blur-none shadow-none'
-                    }`}
+                className={`relative w-full max-w-7xl transition-all duration-1000 ${
+                    isScrolled
+                        ? 'rounded-2xl border border-white/10 bg-brand/80 shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl'
+                        : 'border-b border-white/10 bg-transparent backdrop-blur-none shadow-none'
+                }`}
                 style={{
                     transitionTimingFunction: 'cubic-bezier(0.22, 1.2, 0.36, 1)',
                 }}
             >
                 {/* Thin glowing top edge when scrolled */}
                 <span
-                    className={`pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent transition-opacity duration-500 ${isScrolled ? 'opacity-100' : 'opacity-0'
-                        }`}
+                    className={`pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent transition-opacity duration-500 ${
+                        isScrolled ? 'opacity-100' : 'opacity-0'
+                    }`}
                 />
 
                 {/* Inner Flex Header */}
                 <div
-                    className={`mx-auto flex items-center justify-between transition-all duration-1000 ease-out ${isScrolled ? 'h-16 px-4 sm:px-6' : 'h-24 px-0'
-                        }`}
+                    className={`mx-auto flex items-center justify-between transition-all duration-1000 ease-out ${
+                        isScrolled ? 'h-16 px-4 sm:px-6' : 'h-24 px-0'
+                    }`}
                 >
-                    {/* Desktop Logo */}
-                    <Link to="/au" className="flex items-center shrink-0">
-                        <div className="  lg:h-28 w-auto lg:-ml-2 lg:scale-105 transition-all duration-300 flex items-center">
-                            <img
-                                src="/images/logo.webp"
-                                alt="Digitalis Global"
-                                className="h-full w-auto object-contain"
-                            />
-                        </div>
+                    {/* Desktop & Mobile Logo */}
+                    <Link to="/au" className="flex items-center shrink-0 h-full">
+                        <img
+                            src="/images/logo.webp"
+                            alt="Digitalis Global"
+                            // Reverted Desktop back to lg:h-36. 
+                            // Made Mobile bigger (h-16/h-20) than the tiny version, but small enough to not break layout
+                            className="h-16 sm:h-20 lg:h-36 w-auto object-contain my-auto transition-all duration-300"
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -247,14 +272,16 @@ export default function Navbar() {
                                                 Looking for a custom end-to-end growth strategy?
                                             </p>
 
-                                            <Button
-                                                as={Link}
-                                                to="/au/services"
-                                                variant="primary"
-                                                className="gap-4 px-6 py-3.5 text-xs font-bold tracking-wider uppercase"
-                                            >
-                                                <span className='py-4'>View All Services</span>
-                                            </Button>
+                                            <DropdownMenu.Item asChild className="outline-none">
+                                                <Button
+                                                    as={Link}
+                                                    to="/au/services"
+                                                    variant="primary"
+                                                    className="w-full sm:w-auto justify-center px-6 py-2.5 text-xs font-bold tracking-wider uppercase"
+                                                >
+                                                    <span className='py-4'>View All Services</span>
+                                                </Button>
+                                            </DropdownMenu.Item>
                                         </div>
                                     </DropdownMenu.Content>
                                 </DropdownMenu.Portal>
@@ -268,13 +295,16 @@ export default function Navbar() {
                                 Pricing
                             </Link>
 
-
+                            <Link to="/au/contact" className={navLinkClasses}>
+                                Contact
+                            </Link>
                         </nav>
 
                         <Button
                             as={Link}
                             to="/au/contact"
                             variant="primary"
+                            onClick={handleContactClick}
                             className="h-12 pl-6 pr-2 gap-4 text-sm"
                         >
                             Book a Free Strategy Call
@@ -285,7 +315,7 @@ export default function Navbar() {
                     <button
                         type="button"
                         aria-label="Open navigation menu"
-                        className="ml-auto rounded-full border border-white/10 bg-white/5 p-3 text-white transition-all hover:bg-white/10 active:scale-95 lg:hidden"
+                        className="ml-auto shrink-0 rounded-full border border-white/10 bg-white/5 p-3 text-white transition-all hover:bg-white/10 active:scale-95 lg:hidden"
                         onClick={openMobileMenu}
                     >
                         <Menu className="h-5 w-5" />
@@ -312,19 +342,20 @@ export default function Navbar() {
                                     <Link
                                         to="/au"
                                         onClick={closeMobileMenu}
-                                        className="flex items-center"
+                                        className="flex items-center shrink-0"
                                     >
                                         <img
                                             src="/images/logo.webp"
                                             alt="Digitalis Global"
-                                            className="h-24 sm:h-28 w-auto object-contain"
+                                            // Made the drawer mobile logo matches the new comfortable size
+                                            className="h-16 sm:h-20 w-auto object-contain"
                                         />
                                     </Link>
 
                                     <button
                                         type="button"
                                         aria-label="Close navigation menu"
-                                        className="rounded-full border border-white/20 bg-white/5 p-2.5 text-white transition-all hover:bg-white/10 active:scale-95"
+                                        className="rounded-full border border-white/20 bg-white/5 p-2.5 text-white transition-all hover:bg-white/10 active:scale-95 shrink-0"
                                         onClick={closeMobileMenu}
                                     >
                                         <X className="h-5 w-5" />
@@ -349,8 +380,9 @@ export default function Navbar() {
                                                             {link.label}
                                                         </span>
                                                         <ChevronDown
-                                                            className={`h-5 w-5 text-white/40 transition-transform duration-300 ${mobileServicesOpen ? 'rotate-180 text-cyan-400' : ''
-                                                                }`}
+                                                            className={`h-5 w-5 text-white/40 transition-transform duration-300 ${
+                                                                mobileServicesOpen ? 'rotate-180 text-cyan-400' : ''
+                                                            }`}
                                                         />
                                                     </button>
 
@@ -416,6 +448,7 @@ export default function Navbar() {
                                     to="/au/contact"
                                     variant="primary"
                                     className="w-full justify-between px-5 py-3.5 text-sm"
+                                    onClick={handleContactClick}
                                 >
                                     Book a Strategy Call
                                 </Button>
