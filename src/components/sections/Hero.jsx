@@ -158,7 +158,7 @@ export default function Hero() {
               as="a"
               href="#services"
               variant="outline"
-              className="flex-1 min-w-[140px] sm:flex-initial text-center justify-center px-4"
+              className="flex-1 min-w-[140px] sm:flex-initial text-center justify-center px-4 transition-transform duration-300 hover:scale-105 hover:border-white/50"
             >
               Get a Free Website Audit
             </Button>

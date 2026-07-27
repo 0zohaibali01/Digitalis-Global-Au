@@ -153,11 +153,13 @@ export default function Navbar() {
                 >
                     {/* Desktop Logo */}
                     <Link to="/au" className="flex items-center shrink-0">
-                        <img
-                            src="/images/logo.webp"
-                            alt="Digitalis Global"
-                            className="h-28 lg:h-36 w-auto object-contain transition-all duration-300 lg:-ml-2 lg:scale-105"
-                        />
+                        <div className="  lg:h-28 w-auto lg:-ml-2 lg:scale-105 transition-all duration-300 flex items-center">
+                            <img
+                                src="/images/logo.webp"
+                                alt="Digitalis Global"
+                                className="h-full w-auto object-contain"
+                            />
+                        </div>
                     </Link>
 
                     {/* Desktop Navigation */}
