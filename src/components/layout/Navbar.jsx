@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
     ArrowRight,
     ChevronDown,
@@ -13,6 +14,7 @@ import {
     MonitorSmartphone,
     Clapperboard,
     Sparkles,
+    Zap
 } from 'lucide-react'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import Button from '../ui/Button'
@@ -22,52 +24,59 @@ const links = [
     { label: 'About', href: '/au/about' },
     { label: 'Services', href: '/au/services', hasSubmenu: true },
     { label: 'Case Studies', href: '/au/case-studies' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Pricing', href: '/au/pricing' },
+    { label: 'Contact', href: '/au/contact' },
 ]
 
 const serviceLinks = [
     {
         label: 'Web Development',
         slug: 'web-development',
+        desc: 'Custom high-performance web apps & platforms',
         icon: MonitorSmartphone,
-        color: 'from-sky-500 to-blue-700',
+        color: 'bg-sky-50 text-sky-600 border-sky-200 group-hover/card:bg-sky-500 group-hover/card:text-white',
     },
     {
         label: 'Google Ads & PPC',
         slug: 'google-ads-and-ppc',
+        desc: 'High-ROI paid search & campaign management',
         icon: Megaphone,
-        color: 'from-fuchsia-500 to-purple-700',
+        color: 'bg-fuchsia-50 text-fuchsia-600 border-fuchsia-200 group-hover/card:bg-fuchsia-500 group-hover/card:text-white',
     },
     {
         label: 'Branding & Creative',
         slug: 'branding-and-creative',
+        desc: 'Visual identities that command attention',
         icon: PenTool,
-        color: 'from-amber-500 to-orange-700',
+        color: 'bg-amber-50 text-amber-600 border-amber-200 group-hover/card:bg-amber-500 group-hover/card:text-white',
     },
     {
         label: 'E-Commerce Development',
         slug: 'e-commerce-development',
+        desc: 'Scalable online stores engineered to convert',
         icon: ShoppingCart,
-        color: 'from-blue-500 to-indigo-700',
+        color: 'bg-indigo-50 text-indigo-600 border-indigo-200 group-hover/card:bg-indigo-500 group-hover/card:text-white',
     },
     {
         label: 'SEO & Technical SEO',
         slug: 'seo-and-technical-seo',
+        desc: 'Dominate rankings with data-driven strategy',
         icon: Search,
-        color: 'from-teal-500 to-emerald-700',
+        color: 'bg-teal-50 text-teal-600 border-teal-200 group-hover/card:bg-teal-500 group-hover/card:text-white',
     },
     {
         label: 'Content Marketing',
         slug: 'content-marketing',
+        desc: 'Engaging content that drives organic revenue',
         icon: Globe,
-        color: 'from-rose-500 to-red-700',
+        color: 'bg-rose-50 text-rose-600 border-rose-200 group-hover/card:bg-rose-500 group-hover/card:text-white',
     },
     {
         label: 'Conversion Rate Optimisation',
         slug: 'conversion-rate-optimisation',
+        desc: 'Turn traffic into qualified leads & sales',
         icon: Clapperboard,
-        color: 'from-violet-500 to-indigo-700',
+        color: 'bg-violet-50 text-violet-600 border-violet-200 group-hover/card:bg-violet-500 group-hover/card:text-white',
     },
 ]
 
@@ -81,6 +90,8 @@ export default function Navbar() {
 
     const [isScrolled, setIsScrolled] = useState(false)
     const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const onScroll = () => setIsScrolled(window.scrollY > 100)
@@ -102,99 +113,62 @@ export default function Navbar() {
         }
     }, [isOpen])
 
-    const handleAnchorClick = (e, targetId) => {
-        const target = document.getElementById(targetId)
-        if (!target) return // If element isn't on current page, allow default route navigation
-
-        e.preventDefault()
-        closeMobileMenu()
-
-        const navbarHeight = isScrolled ? 80 : 100
-        const start = window.pageYOffset
-        const end =
-            target.getBoundingClientRect().top +
-            window.pageYOffset -
-            navbarHeight
-
-        const duration = 400
-        let startTime = null
-
-        const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3)
-
-        const animate = (currentTime) => {
-            if (!startTime) startTime = currentTime
-            const elapsed = currentTime - startTime
-            const progress = Math.min(elapsed / duration, 1)
-
-            window.scrollTo({
-                top: start + (end - start) * easeOutCubic(progress),
-            })
-
-            if (progress < 1) {
-                requestAnimationFrame(animate)
-            }
-        }
-
-        requestAnimationFrame(animate)
-    }
 
     const triggerClasses =
         'group relative inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent data-[state=open]:border-accent/40 data-[state=open]:bg-accent/10 data-[state=open]:text-white data-[state=open]:shadow-[0_0_16px_rgba(56,189,248,0.35)] ' +
         navLinkClasses
 
     const contentClasses =
-        'w-[min(90vw,720px)] rounded-3xl border border-neutral-200 bg-white p-6 shadow-2xl z-[999] data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2 data-[state=open]:duration-200 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-2 data-[state=closed]:duration-150'
+        'relative w-[min(92vw,800px)] rounded-3xl border border-white/20 bg-white p-6 text-slate-900 shadow-[0_25px_70px_rgba(0,0,0,0.6)] z-[999] overflow-hidden ' +
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-top-6 data-[state=open]:duration-300 ' +
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-top-4 data-[state=closed]:duration-200'
 
     return (
         <header
-            className={`fixed inset-x-0 top-0 z-50 flex justify-center px-6 md:px-8 transition-all duration-1000 ${
-                isScrolled ? 'pt-3' : 'pt-0'
-            }`}
+            className={`fixed inset-x-0 top-0 z-50 flex justify-center px-6 md:px-8 transition-all duration-1000 ${isScrolled ? 'pt-3' : 'pt-0'
+                }`}
             style={{
                 transitionTimingFunction: 'cubic-bezier(0.22, 1.2, 0.36, 1)',
             }}
         >
             <div
-                className={`relative w-full max-w-7xl transition-all duration-1000 ${
-                    isScrolled
-                        ? 'rounded-2xl border border-white/10 bg-brand/80 shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl'
-                        : 'border-b border-white/10 bg-transparent backdrop-blur-none shadow-none'
-                }`}
+                className={`relative w-full max-w-7xl transition-all duration-1000 ${isScrolled
+                    ? 'rounded-2xl border border-white/10 bg-brand/80 shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl'
+                    : 'border-b border-white/10 bg-transparent backdrop-blur-none shadow-none'
+                    }`}
                 style={{
                     transitionTimingFunction: 'cubic-bezier(0.22, 1.2, 0.36, 1)',
                 }}
             >
                 {/* Thin glowing top edge when scrolled */}
                 <span
-                    className={`pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent transition-opacity duration-500 ${
-                        isScrolled ? 'opacity-100' : 'opacity-0'
-                    }`}
+                    className={`pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent transition-opacity duration-500 ${isScrolled ? 'opacity-100' : 'opacity-0'
+                        }`}
                 />
 
                 {/* Inner Flex Header */}
                 <div
-                    className={`mx-auto flex items-center justify-between transition-all duration-1000 ease-out ${
-                        isScrolled ? 'h-16 px-4 sm:px-6' : 'h-24 px-0'
-                    }`}
+                    className={`mx-auto flex items-center justify-between transition-all duration-1000 ease-out ${isScrolled ? 'h-16 px-4 sm:px-6' : 'h-24 px-0'
+                        }`}
                 >
                     {/* Desktop Logo */}
-                    <a href="/au" className="flex items-center shrink-0">
+                    <Link to="/au" className="flex items-center shrink-0">
                         <img
                             src="/images/logo.webp"
                             alt="Digitalis Global"
                             className="h-28 lg:h-36 w-auto object-contain transition-all duration-300 lg:-ml-2 lg:scale-105"
                         />
-                    </a>
+                    </Link>
 
                     {/* Desktop Navigation */}
                     <div className="ml-auto hidden items-center gap-6 lg:flex">
                         <nav className="flex items-center gap-2 text-sm font-medium text-white/90">
-                            <a href="/au/about" className={navLinkClasses}>
+                            <Link to="/au/about" className={navLinkClasses}>
                                 About
-                            </a>
+                            </Link>
 
                             {/* Desktop Services Dropdown */}
-                            <DropdownMenu.Root>
+                            <DropdownMenu.Root modal={false}>
                                 <DropdownMenu.Trigger className={triggerClasses}>
                                     Services
                                     <ChevronDown className="h-4 w-4 transition-transform duration-500 group-data-[state=open]:rotate-180" />
@@ -206,22 +180,30 @@ export default function Navbar() {
                                         align="center"
                                         className={contentClasses}
                                     >
-                                        <div className="mb-5 border-l-4 border-accent pl-4">
-                                            <h3 className="text-xl font-bold text-brand font-display">
-                                                Our Services
-                                            </h3>
-                                            <p className="mt-1 text-sm text-neutral-500">
-                                                Ideas turned into execution. Explore our capabilities.
-                                            </p>
+                                        {/* Top Gradient Stripe */}
+                                        <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-cyan-400 via-indigo-500 to-fuchsia-500" />
+
+                                        {/* Header */}
+                                        <div className="mb-5 flex items-center justify-between border-b border-slate-100 pb-4 pt-1">
+                                            <div>
+                                                <h3 className="text-xl font-extrabold tracking-tight text-slate-900 font-display">
+                                                    Our Digital Services
+                                                </h3>
+                                                <p className="mt-0.5 text-xs text-slate-500 font-medium">
+                                                    Select a capability to explore case studies & pricing
+                                                </p>
+                                            </div>
+
+                                            <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700 border border-slate-200">
+                                                <Zap className="h-3.5 w-3.5 text-cyan-600" />
+                                                7 Capabilities
+                                            </span>
                                         </div>
 
-                                        <div className="grid gap-3 sm:grid-cols-2">
-                                            {serviceLinks.map((service) => {
+                                        {/* Service Grid */}
+                                        <div className="grid gap-2.5 sm:grid-cols-2">
+                                            {serviceLinks.map((service, index) => {
                                                 const Icon = service.icon
-                                                const badgeClasses =
-                                                    'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ' +
-                                                    service.color +
-                                                    ' text-white'
 
                                                 return (
                                                     <DropdownMenu.Item
@@ -229,66 +211,68 @@ export default function Navbar() {
                                                         asChild
                                                         className="outline-none"
                                                     >
-                                                        <a
-                                                            href={'/au/services/' + service.slug}
-                                                            className="group/item flex items-center gap-4 rounded-xl border border-transparent p-2 transition-all duration-300 hover:border-neutral-200 hover:bg-neutral-50"
+                                                        <Link
+                                                            to={'/au/services/' + service.slug}
+                                                            style={{
+                                                                animationDelay: `${index * 35}ms`,
+                                                            }}
+                                                            className="group/card flex items-start gap-3.5 rounded-2xl border border-slate-200/80 bg-slate-50/50 p-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:shadow-lg animate-in fade-in slide-in-from-bottom-2 duration-300"
                                                         >
-                                                            <span className={badgeClasses}>
+                                                            <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 ${service.color}`}>
                                                                 <Icon className="h-5 w-5" />
                                                             </span>
 
-                                                            <span className="flex-1 text-sm font-semibold text-neutral-900">
-                                                                {service.label}
-                                                            </span>
-
-                                                            <ArrowRight className="h-4 w-4 shrink-0 text-neutral-400 transition-all duration-300 group-hover/item:translate-x-1 group-hover/item:text-accent" />
-                                                        </a>
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="flex items-center justify-between">
+                                                                    <p className="text-sm font-bold text-slate-900 group-hover/card:text-cyan-600 transition-colors">
+                                                                        {service.label}
+                                                                    </p>
+                                                                    <ArrowRight className="h-4 w-4 shrink-0 opacity-0 -translate-x-2 text-cyan-600 transition-all duration-300 group-hover/card:opacity-100 group-hover/card:translate-x-0" />
+                                                                </div>
+                                                                <p className="mt-0.5 text-xs text-slate-500 line-clamp-1">
+                                                                    {service.desc}
+                                                                </p>
+                                                            </div>
+                                                        </Link>
                                                     </DropdownMenu.Item>
                                                 )
                                             })}
                                         </div>
 
-                                        <div className="mt-6 border-t border-slate-100 pt-6">
+                                        {/* Footer */}
+                                        <div className="mt-5 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-100 pt-4">
+                                            <p className="text-xs text-slate-500 font-medium">
+                                                Looking for a custom end-to-end growth strategy?
+                                            </p>
+
                                             <Button
-                                                as="a"
-                                                href="/au/services"
+                                                as={Link}
+                                                to="/au/services"
                                                 variant="primary"
-                                                icon={<ArrowRight className="h-4 w-4 stroke-[2.5]" />}
-                                                className="w-full justify-between px-5 py-3.5 text-sm"
+                                                className="gap-4 px-6 py-3.5 text-xs font-bold tracking-wider uppercase"
                                             >
-                                                View All Services
+                                                <span className='py-4'>View All Services</span>
                                             </Button>
                                         </div>
                                     </DropdownMenu.Content>
                                 </DropdownMenu.Portal>
                             </DropdownMenu.Root>
 
-                            <a href="/au/case-studies" className={navLinkClasses}>
+                            <Link to="/au/case-studies" className={navLinkClasses}>
                                 Case Studies
-                            </a>
+                            </Link>
 
-                            <a
-                                href="#pricing"
-                                className={navLinkClasses}
-                                onClick={(e) => handleAnchorClick(e, 'pricing')}
-                            >
+                            <Link to="/au/pricing" className={navLinkClasses}>
                                 Pricing
-                            </a>
+                            </Link>
 
-                            <a
-                                href="#contact"
-                                className={navLinkClasses}
-                                onClick={(e) => handleAnchorClick(e, 'contact')}
-                            >
-                                Contact
-                            </a>
+
                         </nav>
 
                         <Button
-                            as="a"
-                            href="#contact"
+                            as={Link}
+                            to="/au/contact"
                             variant="primary"
-                            onClick={(e) => handleAnchorClick(e, 'contact')}
                             className="h-12 pl-6 pr-2 gap-4 text-sm"
                         >
                             Book a Free Strategy Call
@@ -323,8 +307,8 @@ export default function Navbar() {
                             {/* Drawer Header */}
                             <div>
                                 <div className="flex items-center justify-between pb-6 border-b border-white/10">
-                                    <a
-                                        href="/au"
+                                    <Link
+                                        to="/au"
                                         onClick={closeMobileMenu}
                                         className="flex items-center"
                                     >
@@ -333,7 +317,7 @@ export default function Navbar() {
                                             alt="Digitalis Global"
                                             className="h-24 sm:h-28 w-auto object-contain"
                                         />
-                                    </a>
+                                    </Link>
 
                                     <button
                                         type="button"
@@ -351,7 +335,6 @@ export default function Navbar() {
                                         if (link.hasSubmenu) {
                                             return (
                                                 <div key={link.label} className="flex flex-col">
-                                                    {/* Services Header Toggle */}
                                                     <button
                                                         type="button"
                                                         onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
@@ -364,9 +347,8 @@ export default function Navbar() {
                                                             {link.label}
                                                         </span>
                                                         <ChevronDown
-                                                            className={`h-5 w-5 text-white/40 transition-transform duration-300 ${
-                                                                mobileServicesOpen ? 'rotate-180 text-cyan-400' : ''
-                                                            }`}
+                                                            className={`h-5 w-5 text-white/40 transition-transform duration-300 ${mobileServicesOpen ? 'rotate-180 text-cyan-400' : ''
+                                                                }`}
                                                         />
                                                     </button>
 
@@ -374,26 +356,25 @@ export default function Navbar() {
                                                     {mobileServicesOpen && (
                                                         <div className="ml-4 mt-1 flex flex-col gap-1 border-l border-white/10 pl-3 animate-in fade-in slide-in-from-top-2 duration-200">
                                                             {serviceLinks.map((s) => (
-                                                                <a
+                                                                <Link
                                                                     key={s.slug}
-                                                                    href={'/au/services/' + s.slug}
+                                                                    to={'/au/services/' + s.slug}
                                                                     onClick={closeMobileMenu}
                                                                     className="rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/5 hover:text-white transition-colors"
                                                                 >
                                                                     {s.label}
-                                                                </a>
+                                                                </Link>
                                                             ))}
 
-                                                            {/* Main View All Services Page Direct Link */}
                                                             <div className="pt-2">
-                                                                <a
-                                                                    href="/au/services"
+                                                                <Link
+                                                                    to="/au/services"
                                                                     onClick={closeMobileMenu}
                                                                     className="flex items-center justify-between rounded-lg bg-cyan-400/10 border border-cyan-400/20 px-3 py-2.5 text-sm font-semibold text-cyan-400 hover:bg-cyan-400/20 transition-all"
                                                                 >
                                                                     <span>View All Services</span>
                                                                     <ArrowRight className="h-4 w-4" />
-                                                                </a>
+                                                                </Link>
                                                             </div>
                                                         </div>
                                                     )}
@@ -401,29 +382,21 @@ export default function Navbar() {
                                             )
                                         }
 
-                                        const isAnchor = link.href.startsWith('#')
-
                                         return (
-                                            <a
+                                            <Link
                                                 key={link.label}
-                                                href={link.href}
+                                                to={link.href}
                                                 style={{
                                                     animationDelay: `${idx * 60}ms`,
                                                 }}
                                                 className="group flex items-center justify-between rounded-xl border-l-2 border-transparent px-4 py-3.5 text-lg font-semibold text-white/90 transition-all duration-300 hover:border-accent hover:bg-white/[0.06] hover:text-white animate-in fade-in slide-in-from-right-4 duration-300"
-                                                onClick={(e) => {
-                                                    if (isAnchor) {
-                                                        handleAnchorClick(e, link.href.replace('#', ''))
-                                                    } else {
-                                                        closeMobileMenu()
-                                                    }
-                                                }}
+                                                onClick={closeMobileMenu}
                                             >
                                                 <span className="text-left font-display tracking-wide">
                                                     {link.label}
                                                 </span>
                                                 <ArrowRight className="h-4 w-4 text-white/30 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-accent" />
-                                            </a>
+                                            </Link>
                                         )
                                     })}
                                 </nav>
@@ -437,12 +410,10 @@ export default function Navbar() {
                                 </div>
 
                                 <Button
-                                    as="a"
-                                    href="#contact"
+                                    as={Link}
+                                    to="/au/contact"
                                     variant="primary"
-                                    icon={<ArrowRight className="h-4 w-4 stroke-[2.5]" />}
                                     className="w-full justify-between px-5 py-3.5 text-sm"
-                                    onClick={(e) => handleAnchorClick(e, 'contact')}
                                 >
                                     Book a Strategy Call
                                 </Button>

@@ -3,6 +3,8 @@ import { Play, Star } from 'lucide-react'
 import { gsap } from 'gsap'
 import Button from '../ui/Button'
 import Preheading from '../ui/Preheading'
+import { Link, useNavigate } from 'react-router-dom'
+
 
 export default function Hero() {
   const containerRef = useRef(null)
@@ -113,38 +115,6 @@ export default function Hero() {
     })
   }
 
-  const scrollToElement = (e, id) => {
-    e.preventDefault()
-
-    const element = document.getElementById(id)
-    if (!element) return
-
-    const start = window.pageYOffset
-    const end = element.getBoundingClientRect().top + window.pageYOffset - 80
-    const duration = 350
-
-    let startTime = null
-
-    const easeInOutCubic = (t) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
-
-    const animate = (currentTime) => {
-      if (!startTime) startTime = currentTime
-
-      const elapsed = currentTime - startTime
-      const progress = Math.min(elapsed / duration, 1)
-
-      window.scrollTo({
-        top: start + (end - start) * easeInOutCubic(progress),
-      })
-
-      if (progress < 1) {
-        requestAnimationFrame(animate)
-      }
-    }
-
-    requestAnimationFrame(animate)
-  }
 
   return (
     <section
@@ -177,9 +147,8 @@ export default function Hero() {
           {/* CTA Buttons - Forced into a Row on Mobile */}
           <div className="hero-ctas mt-10 flex w-full flex-row flex-wrap items-center justify-center gap-3 sm:w-auto sm:justify-start">
             <Button
-              as="a"
-              href="#contact"
-              onClick={(e) => scrollToElement(e, 'contact')}
+              as={Link}
+              to="/au/contact"
               variant="primary"
               className="flex-1 min-w-[200px] sm:flex-initial pl-6 pr-2 py-3 gap-4 text-center justify-center sm:justify-between"
             >

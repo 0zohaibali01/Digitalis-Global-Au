@@ -1,4 +1,6 @@
 import Button from '../ui/Button'
+import { Link, useNavigate } from 'react-router-dom'
+
 
 export default function CTABand() {
   return (
@@ -38,8 +40,8 @@ export default function CTABand() {
             {/* Primary Action Button */}
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button
-                as="a"
-                href="mailto:hello@digitalisglobal.com"
+                as={Link}
+                to="/au/contact"
                 variant="primary"
                 className="scale-105 pl-8 pr-3 py-4 gap-4 text-base"
               >
