@@ -76,7 +76,8 @@ export default function ContactPage() {
     setErrorMessage('')
 
     try {
-      const response = await fetch('http://localhost:5000/api/v1/contact', {
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+      const response = await fetch(`${baseUrl}/api/v1/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,14 +110,14 @@ export default function ContactPage() {
 
   return (
     <section id="contact" className="relative w-full bg-brand-light pb-24 lg:pb-32 min-h-screen">
-      
+
       {/* Dark Header Banner Background */}
       <div className="absolute top-0 left-0 w-full h-[550px] bg-gradient-to-b from-brand-dark via-brand to-brand-dark overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]">
         <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(14,165,233,0.1),rgba(16,61,77,0.05))]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 pt-36">
-        
+
         {/* Header Title Section */}
         <div className="mx-auto max-w-3xl text-center mb-16">
           <Preheading className="text-cyan-400">Let's connect</Preheading>
@@ -130,7 +131,7 @@ export default function ContactPage() {
 
         {/* Content Split Layout */}
         <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-          
+
           {/* Left Column: Contact Cards */}
           <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {contactCards.map((card) => {
@@ -141,9 +142,8 @@ export default function ContactPage() {
                   key={card.title}
                   href={card.href}
                   target={card.href?.startsWith('http') ? '_blank' : undefined}
-                  className={`group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 ${
-                    card.href ? 'hover:border-cyan-400 hover:shadow-[0_8px_30px_rgba(34,211,238,0.15)] hover:-translate-y-1 cursor-pointer' : ''
-                  }`}
+                  className={`group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 ${card.href ? 'hover:border-cyan-400 hover:shadow-[0_8px_30px_rgba(34,211,238,0.15)] hover:-translate-y-1 cursor-pointer' : ''
+                    }`}
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 text-brand mb-5 transition-colors duration-300 group-hover:bg-cyan-50 group-hover:text-cyan-600">
                     <Icon className="h-5 w-5 stroke-[2]" />
@@ -159,7 +159,7 @@ export default function ContactPage() {
           <div className="lg:col-span-7">
             <div className="rounded-[2rem] border border-neutral-200 bg-white p-8 sm:p-12 shadow-[0_15px_40px_rgba(0,0,0,0.08)]">
               {isSubmitted ? (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="py-16 text-center flex flex-col items-center"
@@ -272,9 +272,9 @@ export default function ContactPage() {
                   </div>
 
                   <div className="pt-4">
-                    <Button 
-                      type="submit" 
-                      className="flex-1 min-w-[200px] sm:flex-initial pl-6 pr-2 py-3 gap-4 text-center justify-center sm:justify-between" 
+                    <Button
+                      type="submit"
+                      className="flex-1 min-w-[200px] sm:flex-initial pl-6 pr-2 py-3 gap-4 text-center justify-center sm:justify-between"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? 'Sending Request...' : 'Submit Inquiry'}
@@ -297,11 +297,10 @@ export default function ContactPage() {
             {faqs.map((faq, index) => {
               const isOpen = openFaq === index
               return (
-                <div 
-                  key={index} 
-                  className={`rounded-2xl border transition-all duration-500 ${
-                    isOpen ? 'border-cyan-300 bg-white shadow-md' : 'border-neutral-200 bg-white hover:border-neutral-300'
-                  }`}
+                <div
+                  key={index}
+                  className={`rounded-2xl border transition-all duration-500 ${isOpen ? 'border-cyan-300 bg-white shadow-md' : 'border-neutral-200 bg-white hover:border-neutral-300'
+                    }`}
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : index)}
@@ -314,7 +313,7 @@ export default function ContactPage() {
                       {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                     </div>
                   </button>
-                  
+
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
