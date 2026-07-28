@@ -4,6 +4,7 @@ import RootLayout from './layouts/RootLayout'
 import ErrorBoundary from './components/ErrorBoundary'
 import ScrollToTop from './components/ScrollToTop'
 
+
 const HomePage = lazy(() => import('./pages/HomePage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
 const ServicesPage = lazy(() => import('./pages/ServicesPage'))
@@ -14,7 +15,36 @@ const PricingPage = lazy(() => import('./pages/PricingPage'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
 
 function PageLoader() {
-  return <div className="flex min-h-screen items-center justify-center text-brand font-medium">Loading...</div>
+  return (
+    <div className="fixed inset-0 z-50 flex min-h-screen w-full flex-col items-center justify-center bg-white">
+      {/* Container with relative positioning for centered elements */}
+      <div className="relative flex items-center justify-center">
+        {/* Soft glowing background blur */}
+        <div className="absolute h-24 w-24 rounded-full bg-cyan-400/20 blur-xl animate-pulse" />
+
+        {/* Outer Pulsing Ring */}
+        <div className="absolute h-16 w-16 animate-ping rounded-full border border-cyan-500/30 duration-1000" />
+
+        {/* Modern Gradient Spinner */}
+        <div className="h-12 w-12 animate-spin rounded-full border-2 border-slate-100 border-t-cyan-600 border-r-cyan-600 shadow-sm" />
+
+        {/* Center Brand Dot */}
+        <div className="absolute h-2.5 w-2.5 rounded-full bg-[#103D4D]" />
+      </div>
+
+      {/* Branded Loading Text */}
+      <div className="mt-6 flex flex-col items-center gap-1">
+        <span className="text-[13px] font-semibold uppercase tracking-widest text-[#103D4D]">
+          Digitalis Global
+        </span>
+        <div className="flex items-center gap-1.5">
+          <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500 [animation-delay:-0.3s]" />
+          <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500 [animation-delay:-0.15s]" />
+          <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500" />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 function App() {
