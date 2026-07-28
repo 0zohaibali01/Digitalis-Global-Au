@@ -76,7 +76,15 @@ export default function ContactPage() {
     setErrorMessage('')
 
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+      // 1. Get environment variable or fallback
+      const rawUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+      
+      // 2. Strip trailing slashes
+      const cleanUrl = rawUrl.trim().replace(/\/$/, '')
+      
+      // 3. Ensure absolute protocol (prevents local domain prepending on Vercel)
+      const baseUrl = cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`
+
       const response = await fetch(`${baseUrl}/api/v1/contact`, {
         method: 'POST',
         headers: {
@@ -140,8 +148,9 @@ export default function ContactPage() {
               return (
                 <CardWrapper
                   key={card.title}
-                  href={card.href}
+                  href={card.href || undefined}
                   target={card.href?.startsWith('http') ? '_blank' : undefined}
+                  rel={card.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                   className={`group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 ${card.href ? 'hover:border-cyan-400 hover:shadow-[0_8px_30px_rgba(34,211,238,0.15)] hover:-translate-y-1 cursor-pointer' : ''
                     }`}
                 >
@@ -173,6 +182,7 @@ export default function ContactPage() {
                     Thank you. A strategist from Digitalis Global will review your requirements and reach out within 24 hours.
                   </p>
                   <button
+                    type="button"
                     onClick={() => setIsSubmitted(false)}
                     className="mt-10 px-6 py-2.5 rounded-full border border-neutral-200 text-sm font-bold text-brand hover:bg-slate-50 hover:border-neutral-300 transition-all duration-300"
                   >
@@ -303,6 +313,7 @@ export default function ContactPage() {
                     }`}
                 >
                   <button
+                    type="button"
                     onClick={() => setOpenFaq(isOpen ? null : index)}
                     className="flex w-full items-center justify-between px-6 py-5 text-left focus:outline-none"
                   >
