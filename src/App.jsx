@@ -71,8 +71,8 @@ function App() {
             </Route>
 
             {/* Admin routes — deliberately outside RootLayout, no public nav/footer */}
-            <Route path="/au/admin/login" element={<AdminLoginPage />} />
-
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+            
             <Route element={<ProtectedRoute />}>
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/case-studies/new" element={<AdminCaseStudyFormPage />} />
