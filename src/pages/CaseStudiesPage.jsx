@@ -6,6 +6,7 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 import CTABand from '../components/sections/CTABand'
 import Preheading from '../components/ui/Preheading'
@@ -13,6 +14,26 @@ import Reveal from '../components/ui/Reveal'
 import { caseStudies } from '../data/caseStudies'
 
 const canonical = 'https://www.digitalisglobal.com/au/case-studies'
+
+// Animation variants for the Features/Value Props grid
+const featureContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+}
+
+const featureCardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+}
 
 export default function CaseStudiesPage() {
   const schema = {
@@ -202,26 +223,46 @@ export default function CaseStudiesPage() {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Features Section with Animations */}
       <section className="bg-brand-light px-6 py-20 md:px-8 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-3">
+        <motion.div
+          variants={featureContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mx-auto grid max-w-7xl gap-6 md:grid-cols-3"
+        >
           {features.map(({ icon: Icon, title, copy }) => (
-            <Reveal
+            <motion.div
               key={title}
-              className="rounded-3xl bg-white p-8"
+              variants={featureCardVariants}
+              whileHover={{
+                y: -8,
+                boxShadow:
+                  '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02)',
+              }}
+              className="group relative flex flex-col justify-between rounded-3xl bg-white p-8 transition-all duration-300 border border-transparent hover:border-cyan-200"
             >
-              <Icon className="h-7 w-7 text-cyan-600" />
+              <div>
+                {/* Icon Container with Hover Glow */}
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 transition-colors duration-300 group-hover:bg-cyan-500 group-hover:text-white">
+                  <Icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
+                </div>
 
-              <h2 className="mt-5 font-display text-xl font-bold text-brand">
-                {title}
-              </h2>
+                <h2 className="mt-6 font-display text-xl font-bold text-brand transition-colors duration-300 group-hover:text-cyan-950">
+                  {title}
+                </h2>
 
-              <p className="mt-3 leading-7 text-neutral-600">
-                {copy}
-              </p>
-            </Reveal>
+                <p className="mt-3 leading-7 text-neutral-600">
+                  {copy}
+                </p>
+              </div>
+
+              {/* Animated Bottom Cyan Gradient Line */}
+              <div className="mt-8 h-1 w-0 rounded-full bg-gradient-to-r from-cyan-400 to-cyan-600 transition-all duration-300 group-hover:w-full" />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       <CTABand />

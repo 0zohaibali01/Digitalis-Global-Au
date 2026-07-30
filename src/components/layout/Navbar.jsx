@@ -154,7 +154,7 @@ export default function Navbar() {
                     {/* Desktop & Mobile Logo */}
                     <Link to="/au" className="flex items-center shrink-0">
                         {/* ADDED: h-10 sm:h-12 for mobile to prevent logo from breaking layout */}
-                        <div className="h-20 sm:h-auto lg:h-28 w-auto lg:-ml-2 lg:scale-105 transition-all duration-300 flex items-center">
+                        <div className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto lg:-ml-2 lg:scale-105 transition-all duration-300 flex items-center">
                             <img
                                 src="/images/logo.webp"
                                 alt="Digitalis Global"
@@ -241,7 +241,7 @@ export default function Navbar() {
                                                 )
                                             })}
                                         </div>
-                                        
+
                                         {/* Footer */}
                                         <div className="mt-5 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-100 pt-4">
                                             <p className="text-xs text-slate-500 font-medium">
