@@ -74,9 +74,9 @@ function App() {
             <Route path="/au/admin/login" element={<AdminLoginPage />} />
 
             <Route element={<ProtectedRoute />}>
-              <Route path="/au/admin" element={<AdminDashboardPage />} />
-              <Route path="/au/admin/case-studies/new" element={<AdminCaseStudyFormPage />} />
-              <Route path="/au/admin/case-studies/:id/edit" element={<AdminCaseStudyFormPage />} />
+              <Route path="/admin" element={<AdminDashboardPage />} />
+              <Route path="/admin/case-studies/new" element={<AdminCaseStudyFormPage />} />
+              <Route path="/admin/case-studies/:id/edit" element={<AdminCaseStudyFormPage />} />
             </Route>
           </Routes>
         </Suspense>
