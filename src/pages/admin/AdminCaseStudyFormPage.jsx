@@ -142,7 +142,7 @@ export default function AdminCaseStudyFormPage() {
       } else {
         await createCaseStudy(token, payload)
       }
-      navigate('/au/admin')
+      navigate('/admin')
     } catch (err) {
       setError(err.status === 409 ? err.message : err.message || 'Failed to save.')
       setSaving(false)
@@ -165,7 +165,7 @@ export default function AdminCaseStudyFormPage() {
     <div className="min-h-screen bg-brand-dark px-6 py-10 text-white md:px-10">
       <div className="mx-auto max-w-3xl">
         <Link
-          to="/au/admin"
+          to="/admin"
           className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" /> Back to dashboard
@@ -411,7 +411,7 @@ export default function AdminCaseStudyFormPage() {
             >
               {saving ? 'Saving…' : isEditing ? 'Save changes' : 'Create case study'}
             </button>
-            <Link to="/au/admin" className="text-sm text-slate-400 hover:text-white">
+            <Link to="/admin" className="text-sm text-slate-400 hover:text-white">
               Cancel
             </Link>
           </div>

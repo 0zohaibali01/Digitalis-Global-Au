@@ -65,7 +65,7 @@ export default function AdminDashboardPage() {
 
           <div className="flex items-center gap-3">
             <Link
-              to="/au/admin/case-studies/new"
+              to="/admin/case-studies/new"
               className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-4 py-2.5 text-sm font-bold text-brand-dark transition hover:bg-cyan-300"
             >
               <Plus className="h-4 w-4" /> New case study
@@ -122,7 +122,7 @@ export default function AdminDashboardPage() {
                       <div className="flex items-center justify-end gap-2">
                         {study.isPublished && (
                           <a
-                            href={'/au/case-studies/' + study.slug}
+                            href={'/case-studies/' + study.slug}
                             target="_blank"
                             rel="noreferrer"
                             className="rounded-lg p-2 text-slate-400 transition hover:bg-white/10 hover:text-white"
@@ -132,7 +132,7 @@ export default function AdminDashboardPage() {
                           </a>
                         )}
                         <Link
-                          to={'/au/admin/case-studies/' + study.id + '/edit'}
+                          to={'/admin/case-studies/' + study.id + '/edit'}
                           className="rounded-lg p-2 text-slate-400 transition hover:bg-white/10 hover:text-white"
                           title="Edit"
                         >

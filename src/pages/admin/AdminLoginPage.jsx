@@ -15,7 +15,7 @@ export default function AdminLoginPage() {
   const [submitting, setSubmitting] = useState(false)
 
   if (isAuthenticated) {
-    const redirectTo = location.state?.from?.pathname ?? '/au/admin'
+    const redirectTo = location.state?.from?.pathname ?? '/admin'
     return <Navigate to={redirectTo} replace />
   }
 
@@ -26,7 +26,7 @@ export default function AdminLoginPage() {
 
     try {
       await login(email, password)
-      const redirectTo = location.state?.from?.pathname ?? '/au/admin'
+      const redirectTo = location.state?.from?.pathname ?? '/admin'
       navigate(redirectTo, { replace: true })
     } catch (err) {
       setError(
